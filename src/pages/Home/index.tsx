@@ -5,6 +5,7 @@ import Services from "../../components/Services"
 import WelcomeText from "../../components/WelcomeText"
 import { jobs } from "../../data/jobs"
 import Searchbar from "../../components/Searchbar"
+import ListedJobs from "../../components/ListedJobs"
 
 
 const Home = () => {
@@ -15,8 +16,8 @@ const Home = () => {
         if(filters.contractStatus.length > 0) {
             filtered = filtered.filter((job) => filters.contractStatus.includes(job.contractStatus))
         }
-        if (filters.workStatus.length > 0) {
-            filtered = filtered.filter((job) => filters.workStatus.includes(job.contractStatus))
+        if(filters.workStatus.length > 0) {
+            filtered = filtered.filter((job) => filters.workStatus.includes(job.workStatus))
         }
 
         setFilteredJobs(filtered)
@@ -35,6 +36,7 @@ const Home = () => {
                     <Filters savedJobs={savedJobs} onFilterChange={handleFilterChange}/>
                     <div className="w-full">
                         <Searchbar onSearch={handleSearch}/>
+                        <ListedJobs jobs={filteredJobs} savedJobs={savedJobs} setSavedJobs={setSavedJobs}/>
                     </div>
                 </div>
             </div>

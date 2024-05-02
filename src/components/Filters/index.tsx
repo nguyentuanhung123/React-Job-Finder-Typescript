@@ -117,7 +117,7 @@ const Filters = ({onFilterChange, savedJobs}: FiltersProps) => {
                                 <input 
                                     type="checkbox" 
                                     value="Remote"
-                                    checked={work.some((c) => c === "On-Site")} 
+                                    checked={work.some((c) => c === "Remote")} 
                                     onChange={handleLocationStatusChange}
                                     className="w-[16px] h-[16px]"
                                 />
@@ -127,7 +127,7 @@ const Filters = ({onFilterChange, savedJobs}: FiltersProps) => {
                                 <input 
                                     type="checkbox" 
                                     value="Hybrid"
-                                    checked={work.some((c) => c === "On-Site")} 
+                                    checked={work.some((c) => c === "Hybrid")} 
                                     onChange={handleLocationStatusChange}
                                     className="w-[16px] h-[16px]"
                                 />
