@@ -7,7 +7,7 @@ const JobDescription = () => {
 
     const params = useParams()
     // const id = Number(params.jobId) - 1
-    const job = jobs[Number(params.jobId)] ? jobs[Number(params.jobId)] : jobs[0];
+    const job = jobs[Number(params.jobId) - 1] ? jobs[Number(params.jobId) - 1] : jobs[0];
 
     const navigate = useNavigate();
 
