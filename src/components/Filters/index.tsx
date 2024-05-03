@@ -18,9 +18,43 @@ const Filters = ({onFilterChange, savedJobs}: FiltersProps) => {
     const navigate = useNavigate()
 
 
+    /**
+     * useCallback: Hook này được sử dụng để bảo đảm rằng hàm onFilterChange chỉ được tạo ra một lần 
+     * và không thay đổi mỗi lần render. Điều này giúp tăng hiệu suất.
+     * const memoFilterChange: Khai báo một biến không đổi có tên memoFilterChange.
+     * useCallback: Đây là hook React được sử dụng cho các chức năng ghi nhớ.
+     * onFilterChange: Đây là chức năng bạn muốn ghi nhớ.
+     * []: Mảng phụ thuộc trống này có nghĩa là hàm đã ghi nhớ sẽ không bao giờ được tạo lại vì nó không có phần phụ thuộc. 
+     * Nó tương đương với việc nói "chức năng này sẽ không bao giờ thay đổi, 
+     * vì vậy hãy ghi nhớ nó một lần và sử dụng lại trong suốt vòng đời của thành phần".
+     * Vì vậy, dòng const memoFilterChange = useCallback(onFilterChange, []) 
+     * tạo một phiên bản được ghi nhớ của hàm onFilterChange và gán nó cho biến không đổi memoFilterChange, 
+     * đảm bảo rằng nó chỉ được tạo lại nếu thành phần được kết xuất lại do thay đổi trong các phần phụ thuộc, 
+     * trong số đó không có trong trường hợp này.
+     */
     
     const memoFilterChange = useCallback(onFilterChange, [])
 
+
+    /**
+     * useEffect: Hook này được sử dụng để thực hiện các tác vụ phụ thuộc vào các biến trạng thái hoặc các props đã thay đổi. 
+     * Trong đoạn mã này, mỗi khi contract hoặc work thay đổi, nó sẽ gọi hàm memoFilterChange (hàm được tạo ra từ useCallback) 
+     * và truyền các giá trị của contract và work cho hàm này.
+     * Hook useEffect này sẽ thực thi hàm memoFilterChange bất cứ khi nào contract, work hoặc memoFilterChange thay đổi. Hãy chia nhỏ nó ra:
+     * 
+     * useEffect: Đây là hook React được sử dụng để thực thi các tác dụng phụ trong các thành phần hàm.
+     * 
+     * () => { memoFilterChange({ ContractStatus: Contract, WorkStatus: Work }) }: 
+     * Đây là hàm sẽ được thực thi dưới dạng tác dụng phụ. Nó gọi memoFilterChange với một đối tượng chứa các thuộc tính ContractStatus và WorkStatus, 
+     * tương ứng được gán các giá trị của biến contract và biến work.
+     * 
+     * [contract, work, memoFilterChange]: Mảng phụ thuộc này chỉ định các giá trị mà khi được thay đổi sẽ kích hoạt việc thực thi hiệu ứng. 
+     * Trong trường hợp này, hiệu ứng sẽ thực thi bất cứ khi nào giá trị contract, work hoặc memoFilterChange thay đổi.
+     *
+     * Vì vậy, bất cứ khi nào giá trị của contract, work hoặc memoFilterChange thay đổi, hàm được chuyển đến useEffect sẽ được thực thi, 
+     * gọi memoFilterChange một cách hiệu quả với các giá trị được cập nhật cho contract và trạng thái work. 
+     * Điều này đảm bảo rằng logic lọc được áp dụng bất cứ khi nào bất kỳ giá trị nào trong số này thay đổi.
+     */
     useEffect(() => {
         memoFilterChange({ contractStatus: contract, workStatus: work })
     }, [contract, work, memoFilterChange]);
